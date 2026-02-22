@@ -1253,7 +1253,6 @@ class _GameScreenState extends State<GameScreen> {
           )
         ],
       ),
-      Scaffold(
   body: Center(
     child: ConstrainedBox(
       constraints: const BoxConstraints(maxWidth: 600),
