@@ -26,39 +26,29 @@ Map<String, String> get txt => isGermanNotifier.value ? _de : _en;
 final Map<String, String> _de = {
   'title': 'DARTSKALATION',
   'made_by': 'Made by Aikill Beens',
-  'rules_hint':
-      'Runde 1: Triff die 1. Runde 2: Triff die 2.\nNur das Ziel zählt.\nRunde 21: BULLSEYE.',
-
-  // MODUS TITEL
+  'rules_hint': 'Runde 1: Triff die 1. Runde 2: Triff die 2.\nNur das Ziel zählt.\nRunde 21: BULLSEYE.',
   'mode_normal': 'NORMAL (Klassik)',
   'mode_stop': 'RUNDE STOPPEN',
   'mode_punish': 'BESTRAFUNG',
   'mode_hardcore': 'HARDCORE',
   'mode_cricket': 'Cricket Dartskalation',
   'mode_custom': 'MATRIX',
-
-  // BUTTON INFOS
   'info_normal': 'Punkte sammeln. Keine Strafen.',
   'info_stop': 'Fehlwurf = Sofort Rundenende!',
   'info_punish': 'Falsches Feld = Punktabzug!',
   'info_hardcore': 'Fehler = Alles auf 0!',
   'info_cricket': '3x treffen, dann punkten.',
   'info_custom': 'Deine eigenen Regeln.',
-
   'btn_leaderboard': 'BESTENLISTE',
   'leaderboard_title': 'TOP 3 REKORDE (Sitzung)',
   'leaderboard_reset': 'Alles Löschen',
   'no_records': 'Noch keine Einträge.',
-
-  // LANGE BESCHREIBUNGEN
   'desc_normal': 'Klassisches Spiel. Punkte sammeln. Keine Strafen.',
   'desc_stop': 'Ziel verfehlt? Runde sofort vorbei!',
   'desc_punish': 'Falsches Feld? Punktabzug! Board verfehlt? -100 Punkte!',
   'desc_hardcore': 'Nichts oder Falsches getroffen? PUNKTE RESET AUF 0!',
-  'desc_cricket':
-      '3 Treffer öffnen das Feld für Punkte.\nDu sammelst so lange Punkte, bis ALLE Spieler das Feld 3x getroffen haben.',
+  'desc_cricket': '3 Treffer öffnen das Feld für Punkte.\nDu sammelst so lange Punkte, bis ALLE Spieler das Feld 3x getroffen haben.',
   'desc_custom': 'Eigene Matrix-Regeln aktiv. Siehe oben.',
-
   'setup_title': 'Einrichtung: ',
   'player_name': 'Spielername',
   'start_game': 'SPIEL STARTEN',
@@ -95,12 +85,10 @@ final Map<String, String> _de = {
   'dd_miss': 'Miss Logik (Abzug)',
 };
 
-// --- ENGLISCHE TEXTE ---
 final Map<String, String> _en = {
   'title': 'DARTSKALATION',
   'made_by': 'Made by Aikill Beens',
-  'rules_hint':
-      'Round 1: Hit 1. Round 2: Hit 2.\nOnly target counts.\nRound 21: BULLSEYE.',
+  'rules_hint': 'Round 1: Hit 1. Round 2: Hit 2.\nOnly target counts.\nRound 21: BULLSEYE.',
   'mode_normal': 'NORMAL (Classic)',
   'mode_stop': 'ROUND STOP',
   'mode_punish': 'PUNISHMENT',
@@ -121,8 +109,7 @@ final Map<String, String> _en = {
   'desc_stop': 'Miss the target? Turn ends immediately!',
   'desc_punish': 'Wrong field? Points deduction! Miss board? -100 Points!',
   'desc_hardcore': 'Hit nothing or wrong field? FULL SCORE RESET TO 0!',
-  'desc_cricket':
-      'Hit 3x to open scoring.\nCollect points until ALL players have hit the number 3x.',
+  'desc_cricket': 'Hit 3x to open scoring.\nCollect points until ALL players have hit the number 3x.',
   'desc_custom': 'Custom Matrix Rules active. Check settings above.',
   'setup_title': 'Setup: ',
   'player_name': 'Player Name',
@@ -199,6 +186,8 @@ class DartskalationApp extends StatelessWidget {
       },
     );
   }
+}
+
 enum GameMode { normal, cricket }
 
 enum RuleAction {
@@ -237,19 +226,17 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // FIX: MediaQuery für sichere Höhe nutzen
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        toolbarHeight: 40, // Etwas kompakter oben
+        toolbarHeight: 40,
         actions: [
           TextButton.icon(
             onPressed: () {
               isGermanNotifier.value = !isGermanNotifier.value;
             },
-            icon:
-                const Icon(Icons.language, color: Colors.greenAccent, size: 20),
+            icon: const Icon(Icons.language, color: Colors.greenAccent, size: 20),
             label: Text(isGermanNotifier.value ? "DE" : "EN",
                 style: const TextStyle(
                     fontWeight: FontWeight.bold,
@@ -265,14 +252,12 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // HEADER - KOMPAKTER GEMACHT (Icon kleiner, Text kleiner)
               Expanded(
                 flex: 3,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(Icons.track_changes,
-                        size: 40, color: Colors.green), // Kleiner (war 60)
+                    const Icon(Icons.track_changes, size: 40, color: Colors.green),
                     const SizedBox(height: 2),
                     FittedBox(
                       fit: BoxFit.scaleDown,
@@ -281,7 +266,7 @@ class HomeScreen extends StatelessWidget {
                               fontSize: 28,
                               fontWeight: FontWeight.w900,
                               letterSpacing: 2,
-                              color: Colors.white)), // Kleiner (war 32)
+                              color: Colors.white)),
                     ),
                     Text(txt['made_by']!,
                         textAlign: TextAlign.center,
@@ -291,8 +276,7 @@ class HomeScreen extends StatelessWidget {
                             fontStyle: FontStyle.italic)),
                     const SizedBox(height: 5),
                     Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 8, vertical: 4),
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                       decoration: BoxDecoration(
                           color: Colors.white10,
                           borderRadius: BorderRadius.circular(8)),
@@ -306,20 +290,14 @@ class HomeScreen extends StatelessWidget {
                   ],
                 ),
               ),
-
               const SizedBox(height: 5),
-
-              // HERO BUTTON (Normal)
               Expanded(
                 flex: 2,
                 child: _modeButton(
                     context, 'mode_normal', 'info_normal', Colors.green[800]!,
                     isHero: true),
               ),
-
               const SizedBox(height: 8),
-
-              // GRID
               Expanded(
                 flex: 5,
                 child: Column(
@@ -359,7 +337,6 @@ class HomeScreen extends StatelessWidget {
                               child: _modeButton(context, 'mode_custom',
                                   'info_custom', Colors.grey[800]!)),
                           const SizedBox(width: 8),
-                          // BESTENLISTE
                           Expanded(
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
@@ -371,8 +348,7 @@ class HomeScreen extends StatelessWidget {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (_) =>
-                                            const LeaderboardScreen()));
+                                        builder: (_) => const LeaderboardScreen()));
                               },
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -412,8 +388,7 @@ class HomeScreen extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           backgroundColor: col,
           padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         ),
         onPressed: () {
           GameSettings settings = GameSettings();
@@ -483,7 +458,6 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-// --- LEADERBOARD SCREEN ---
 class LeaderboardScreen extends StatefulWidget {
   const LeaderboardScreen({super.key});
 
@@ -542,8 +516,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                                   SizedBox(
                                       width: 30,
                                       child: Text(medal,
-                                          style:
-                                              const TextStyle(fontSize: 18))),
+                                          style: const TextStyle(fontSize: 18))),
                                   Expanded(
                                       child: Text(score.name,
                                           style: const TextStyle(
@@ -565,8 +538,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: ElevatedButton.icon(
-                style:
-                    ElevatedButton.styleFrom(backgroundColor: Colors.red[900]),
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.red[900]),
                 onPressed: () {
                   setState(() {
                     highScores.forEach((key, value) => value.clear());
@@ -607,8 +579,7 @@ class _SetupScreenState extends State<SetupScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-          title:
-              Text("${txt['setup_title']}${txt[widget.settings.presetKey]}")),
+          title: Text("${txt['setup_title']}${txt[widget.settings.presetKey]}")),
       body: SafeArea(
         child: Column(
           children: [
@@ -628,20 +599,17 @@ class _SetupScreenState extends State<SetupScreen> {
                       _buildDropdown(
                           txt['rule_double']!,
                           widget.settings.doubleAction,
-                          (v) =>
-                              setState(() => widget.settings.doubleAction = v!),
+                          (v) => setState(() => widget.settings.doubleAction = v!),
                           isMiss: false),
                       _buildDropdown(
                           txt['rule_triple']!,
                           widget.settings.tripleAction,
-                          (v) =>
-                              setState(() => widget.settings.tripleAction = v!),
+                          (v) => setState(() => widget.settings.tripleAction = v!),
                           isMiss: false),
                       _buildDropdown(
                           txt['rule_miss']!,
                           widget.settings.missAction,
-                          (v) =>
-                              setState(() => widget.settings.missAction = v!),
+                          (v) => setState(() => widget.settings.missAction = v!),
                           isMiss: true),
                     ],
                   ),
@@ -657,8 +625,8 @@ class _SetupScreenState extends State<SetupScreen> {
                   decoration: BoxDecoration(
                       color: Colors.redAccent.withOpacity(0.1),
                       borderRadius: BorderRadius.circular(8),
-                      border:
-                          Border.all(color: Colors.redAccent.withOpacity(0.5))),
+                      border: Border.all(
+                          color: Colors.redAccent.withOpacity(0.5))),
                   child: Text(
                     txt[widget.settings.descKey]!,
                     textAlign: TextAlign.center,
@@ -682,8 +650,7 @@ class _SetupScreenState extends State<SetupScreen> {
                         labelText: txt['player_name'],
                         border: const OutlineInputBorder(),
                         suffixIcon: IconButton(
-                            icon: const Icon(Icons.add_circle,
-                                color: Colors.green),
+                            icon: const Icon(Icons.add_circle, color: Colors.green),
                             onPressed: _addPlayer),
                       ),
                       onSubmitted: (_) => _addPlayer(),
@@ -698,8 +665,7 @@ class _SetupScreenState extends State<SetupScreen> {
                             backgroundColor: Colors.grey[800],
                             child: Text("${i + 1}")),
                         trailing: IconButton(
-                            icon: const Icon(Icons.delete,
-                                color: Colors.redAccent),
+                            icon: const Icon(Icons.delete, color: Colors.redAccent),
                             onPressed: () =>
                                 setState(() => _players.removeAt(i))),
                       ),
@@ -714,8 +680,7 @@ class _SetupScreenState extends State<SetupScreen> {
                 width: double.infinity,
                 height: 60,
                 child: ElevatedButton(
-                  style:
-                      ElevatedButton.styleFrom(backgroundColor: Colors.green),
+                  style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
                   onPressed: _players.isEmpty
                       ? null
                       : () {
@@ -742,41 +707,27 @@ class _SetupScreenState extends State<SetupScreen> {
       String label, RuleAction current, Function(RuleAction?) onChanged,
       {required bool isMiss}) {
     List<DropdownMenuItem<RuleAction>> items = [];
-
     if (isMiss) {
       items = [
-        DropdownMenuItem(
-            value: RuleAction.continueZero, child: Text(txt['dd_cont0']!)),
+        DropdownMenuItem(value: RuleAction.continueZero, child: Text(txt['dd_cont0']!)),
         DropdownMenuItem(value: RuleAction.stop, child: Text(txt['dd_stop']!)),
-        DropdownMenuItem(
-            value: RuleAction.missCustom, child: Text(txt['dd_miss']!)),
-        DropdownMenuItem(
-            value: RuleAction.reset, child: Text(txt['dd_reset']!)),
+        DropdownMenuItem(value: RuleAction.missCustom, child: Text(txt['dd_miss']!)),
+        DropdownMenuItem(value: RuleAction.reset, child: Text(txt['dd_reset']!)),
       ];
     } else {
       items = [
-        DropdownMenuItem(
-            value: RuleAction.addSingle, child: Text(txt['dd_x1']!)),
-        DropdownMenuItem(
-            value: RuleAction.addDouble, child: Text(txt['dd_x2']!)),
-        DropdownMenuItem(
-            value: RuleAction.addTriple, child: Text(txt['dd_x3']!)),
-        DropdownMenuItem(
-            value: RuleAction.subSingle, child: Text(txt['dd_mx1']!)),
-        DropdownMenuItem(
-            value: RuleAction.subDouble, child: Text(txt['dd_mx2']!)),
-        DropdownMenuItem(
-            value: RuleAction.subTriple, child: Text(txt['dd_mx3']!)),
+        DropdownMenuItem(value: RuleAction.addSingle, child: Text(txt['dd_x1']!)),
+        DropdownMenuItem(value: RuleAction.addDouble, child: Text(txt['dd_x2']!)),
+        DropdownMenuItem(value: RuleAction.addTriple, child: Text(txt['dd_x3']!)),
+        DropdownMenuItem(value: RuleAction.subSingle, child: Text(txt['dd_mx1']!)),
+        DropdownMenuItem(value: RuleAction.subDouble, child: Text(txt['dd_mx2']!)),
+        DropdownMenuItem(value: RuleAction.subTriple, child: Text(txt['dd_mx3']!)),
         DropdownMenuItem(value: RuleAction.stop, child: Text(txt['dd_stop']!)),
-        DropdownMenuItem(
-            value: RuleAction.reset, child: Text(txt['dd_reset']!)),
-        DropdownMenuItem(
-            value: RuleAction.continueZero, child: Text(txt['dd_cont0']!)),
-        DropdownMenuItem(
-            value: RuleAction.missCustom, child: Text(txt['dd_miss']!)),
+        DropdownMenuItem(value: RuleAction.reset, child: Text(txt['dd_reset']!)),
+        DropdownMenuItem(value: RuleAction.continueZero, child: Text(txt['dd_cont0']!)),
+        DropdownMenuItem(value: RuleAction.missCustom, child: Text(txt['dd_miss']!)),
       ];
     }
-
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: Row(
@@ -865,13 +816,10 @@ class _GameScreenState extends State<GameScreen> {
           RuleAction action = RuleAction.addSingle;
           if (multiplier == 2) action = widget.settings.doubleAction;
           if (multiplier == 3) action = widget.settings.tripleAction;
-
           if (action == RuleAction.missCustom) {
-            _processThrow(
-                hitTarget: false, penaltyPoints: targetVal * multiplier);
+            _processThrow(hitTarget: false, penaltyPoints: targetVal * multiplier);
             return;
           }
-
           _applyRule(p, action, targetVal);
           if (action == RuleAction.stop) forceTurnEnd = true;
           if (action == RuleAction.reset) scores[p] = 0;
@@ -880,8 +828,7 @@ class _GameScreenState extends State<GameScreen> {
             scores[p] -= penaltyPoints;
           } else {
             if (widget.settings.missAction == RuleAction.reset) scores[p] = 0;
-            if (widget.settings.missAction == RuleAction.stop)
-              forceTurnEnd = true;
+            if (widget.settings.missAction == RuleAction.stop) forceTurnEnd = true;
           }
         }
       }
@@ -914,36 +861,20 @@ class _GameScreenState extends State<GameScreen> {
 
   void _applyRule(int p, RuleAction action, int baseVal) {
     switch (action) {
-      case RuleAction.addSingle:
-        scores[p] += baseVal;
-        break;
-      case RuleAction.addDouble:
-        scores[p] += baseVal * 2;
-        break;
-      case RuleAction.addTriple:
-        scores[p] += baseVal * 3;
-        break;
-      case RuleAction.subSingle:
-        scores[p] -= baseVal;
-        break;
-      case RuleAction.subDouble:
-        scores[p] -= baseVal * 2;
-        break;
-      case RuleAction.subTriple:
-        scores[p] -= baseVal * 3;
-        break;
-      case RuleAction.reset:
-        scores[p] = 0;
-        break;
-      default:
-        break;
+      case RuleAction.addSingle: scores[p] += baseVal; break;
+      case RuleAction.addDouble: scores[p] += baseVal * 2; break;
+      case RuleAction.addTriple: scores[p] += baseVal * 3; break;
+      case RuleAction.subSingle: scores[p] -= baseVal; break;
+      case RuleAction.subDouble: scores[p] -= baseVal * 2; break;
+      case RuleAction.subTriple: scores[p] -= baseVal * 3; break;
+      case RuleAction.reset: scores[p] = 0; break;
+      default: break;
     }
   }
 
   @override
   Widget build(BuildContext context) {
     if (isGameOver) return _buildWinScreen();
-
     bool isBullRound = widget.settings.mode != GameMode.cricket && round == 21;
     String centerText = isBullRound ? "BULL" : "$round";
     bool showPunishmentUI = widget.settings.mode == GameMode.normal &&
@@ -972,33 +903,17 @@ class _GameScreenState extends State<GameScreen> {
                   width: 100,
                   margin: const EdgeInsets.all(6),
                   decoration: BoxDecoration(
-                    color: i == pIdx
-                        ? Colors.green.withOpacity(0.2)
-                        : Colors.white10,
-                    border: i == pIdx
-                        ? Border.all(color: Colors.green, width: 2)
-                        : null,
+                    color: i == pIdx ? Colors.green.withOpacity(0.2) : Colors.white10,
+                    border: i == pIdx ? Border.all(color: Colors.green, width: 2) : null,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(widget.players[i],
-                          style: const TextStyle(fontWeight: FontWeight.bold),
-                          overflow: TextOverflow.ellipsis),
-                      Text("${scores[i]}",
-                          style: const TextStyle(
-                              fontSize: 24, fontWeight: FontWeight.bold)),
+                      Text(widget.players[i], style: const TextStyle(fontWeight: FontWeight.bold), overflow: TextOverflow.ellipsis),
+                      Text("${scores[i]}", style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
                       if (widget.settings.mode == GameMode.cricket)
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: List.generate(
-                                3,
-                                (d) => Icon(Icons.circle,
-                                    size: 8,
-                                    color: d < cricketHits[i]
-                                        ? Colors.orange
-                                        : Colors.grey[800])))
+                        Row(mainAxisAlignment: MainAxisAlignment.center, children: List.generate(3, (d) => Icon(Icons.circle, size: 8, color: d < cricketHits[i] ? Colors.orange : Colors.grey[800])))
                     ],
                   ),
                 ),
@@ -1009,25 +924,9 @@ class _GameScreenState extends State<GameScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(txt['target']!,
-                        style: const TextStyle(
-                            color: Colors.grey, letterSpacing: 2)),
-                    FittedBox(
-                        child: Text(centerText,
-                            style: const TextStyle(
-                                fontSize: 120,
-                                fontWeight: FontWeight.w900,
-                                color: Colors.white))),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: List.generate(
-                          3,
-                          (i) => Icon(Icons.circle,
-                              size: 20,
-                              color: i < dartsThrown
-                                  ? Colors.green
-                                  : Colors.grey[800])),
-                    ),
+                    Text(txt['target']!, style: const TextStyle(color: Colors.grey, letterSpacing: 2)),
+                    FittedBox(child: Text(centerText, style: const TextStyle(fontSize: 120, fontWeight: FontWeight.w900, color: Colors.white))),
+                    Row(mainAxisAlignment: MainAxisAlignment.center, children: List.generate(3, (i) => Icon(Icons.circle, size: 20, color: i < dartsThrown ? Colors.green : Colors.grey[800]))),
                   ],
                 ),
               ),
@@ -1038,37 +937,26 @@ class _GameScreenState extends State<GameScreen> {
                 children: [
                   if (showPunishmentUI)
                     Row(children: [
-                      _btn(
-                          txt['miss_board']!,
-                          Colors.red[900]!,
-                          () => _processThrow(
-                              hitTarget: false, penaltyPoints: 100)),
+                      _btn(txt['miss_board']!, Colors.red[900]!, () => _processThrow(hitTarget: false, penaltyPoints: 100)),
                       const SizedBox(width: 10),
-                      _btn(txt['wrong_field']!, Colors.red[700]!,
-                          _showWrongFieldDialog),
+                      _btn(txt['wrong_field']!, Colors.red[700]!, _showWrongFieldDialog),
                     ])
                   else
                     Row(children: [
-                      _btn(txt['miss_next']!, Colors.red[900]!,
-                          () => _processThrow(hitTarget: false)),
+                      _btn(txt['miss_next']!, Colors.red[900]!, () => _processThrow(hitTarget: false)),
                     ]),
                   const SizedBox(height: 10),
                   Row(children: [
                     if (isBullRound) ...[
-                      _btn(txt['bull']!, Colors.green[800]!,
-                          () => _processThrow(hitTarget: true, multiplier: 1)),
+                      _btn(txt['bull']!, Colors.green[800]!, () => _processThrow(hitTarget: true, multiplier: 1)),
                       const SizedBox(width: 8),
-                      _btn(txt['bullseye']!, Colors.red[900]!,
-                          () => _processThrow(hitTarget: true, multiplier: 2)),
+                      _btn(txt['bullseye']!, Colors.red[900]!, () => _processThrow(hitTarget: true, multiplier: 2)),
                     ] else ...[
-                      _btn(txt['btn_single']!, Colors.blueGrey,
-                          () => _processThrow(hitTarget: true, multiplier: 1)),
+                      _btn(txt['btn_single']!, Colors.blueGrey, () => _processThrow(hitTarget: true, multiplier: 1)),
                       const SizedBox(width: 8),
-                      _btn(txt['btn_double']!, Colors.orange[800]!,
-                          () => _processThrow(hitTarget: true, multiplier: 2)),
+                      _btn(txt['btn_double']!, Colors.orange[800]!, () => _processThrow(hitTarget: true, multiplier: 2)),
                       const SizedBox(width: 8),
-                      _btn(txt['btn_triple']!, Colors.purple[800]!,
-                          () => _processThrow(hitTarget: true, multiplier: 3)),
+                      _btn(txt['btn_triple']!, Colors.purple[800]!, () => _processThrow(hitTarget: true, multiplier: 3)),
                     ]
                   ]),
                 ],
@@ -1085,12 +973,9 @@ class _GameScreenState extends State<GameScreen> {
       child: SizedBox(
         height: 70,
         child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-              backgroundColor: col, padding: EdgeInsets.zero),
+          style: ElevatedButton.styleFrom(backgroundColor: col, padding: EdgeInsets.zero),
           onPressed: onTap,
-          child: Text(txt,
-              style:
-                  const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+          child: Text(txt, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
         ),
       ),
     );
@@ -1113,38 +998,26 @@ class _GameScreenState extends State<GameScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        _multChip(txt['btn_single']!, 1, selectedMult,
-                            (v) => setStateDialog(() => selectedMult = v)),
-                        _multChip(txt['btn_double']!, 2, selectedMult,
-                            (v) => setStateDialog(() => selectedMult = v)),
-                        _multChip(txt['btn_triple']!, 3, selectedMult,
-                            (v) => setStateDialog(() => selectedMult = v)),
+                        _multChip(txt['btn_single']!, 1, selectedMult, (v) => setStateDialog(() => selectedMult = v)),
+                        _multChip(txt['btn_double']!, 2, selectedMult, (v) => setStateDialog(() => selectedMult = v)),
+                        _multChip(txt['btn_triple']!, 3, selectedMult, (v) => setStateDialog(() => selectedMult = v)),
                       ],
                     ),
                     const SizedBox(height: 15),
                     SizedBox(
                       height: 250,
                       child: GridView.builder(
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 5,
-                                mainAxisSpacing: 8,
-                                crossAxisSpacing: 8),
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 5, mainAxisSpacing: 8, crossAxisSpacing: 8),
                         itemCount: 20,
                         itemBuilder: (c, i) {
                           int val = i + 1;
                           return ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.grey[700],
-                                padding: EdgeInsets.zero),
+                            style: ElevatedButton.styleFrom(backgroundColor: Colors.grey[700], padding: EdgeInsets.zero),
                             onPressed: () {
                               Navigator.pop(context);
-                              int penalty = val * selectedMult;
-                              _processThrow(
-                                  hitTarget: false, penaltyPoints: penalty);
+                              _processThrow(hitTarget: false, penaltyPoints: val * selectedMult);
                             },
-                            child: Text("$val",
-                                style: const TextStyle(fontSize: 14)),
+                            child: Text("$val", style: const TextStyle(fontSize: 14)),
                           );
                         },
                       ),
@@ -1152,45 +1025,15 @@ class _GameScreenState extends State<GameScreen> {
                     const SizedBox(height: 10),
                     Row(
                       children: [
-                        Expanded(
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.green[800]),
-                            onPressed: () {
-                              Navigator.pop(context);
-                              _processThrow(
-                                  hitTarget: false, penaltyPoints: 25);
-                            },
-                            child: Text(txt['bull']!,
-                                style: const TextStyle(
-                                    fontSize: 12, fontWeight: FontWeight.bold)),
-                          ),
-                        ),
+                        Expanded(child: ElevatedButton(style: ElevatedButton.styleFrom(backgroundColor: Colors.green[800]), onPressed: () { Navigator.pop(context); _processThrow(hitTarget: false, penaltyPoints: 25); }, child: Text(txt['bull']!, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold)))),
                         const SizedBox(width: 8),
-                        Expanded(
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.red[900]),
-                            onPressed: () {
-                              Navigator.pop(context);
-                              _processThrow(
-                                  hitTarget: false, penaltyPoints: 50);
-                            },
-                            child: Text(txt['bullseye']!,
-                                style: const TextStyle(
-                                    fontSize: 12, fontWeight: FontWeight.bold)),
-                          ),
-                        ),
+                        Expanded(child: ElevatedButton(style: ElevatedButton.styleFrom(backgroundColor: Colors.red[900]), onPressed: () { Navigator.pop(context); _processThrow(hitTarget: false, penaltyPoints: 50); }, child: Text(txt['bullseye']!, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold)))),
                       ],
                     )
                   ],
                 ),
               ),
-              actions: [
-                TextButton(
-                    onPressed: () => Navigator.pop(context),
-                    child: Text(txt['cancel']!))
-              ],
+              actions: [TextButton(onPressed: () => Navigator.pop(context), child: Text(txt['cancel']!))],
             );
           },
         );
@@ -1209,10 +1052,7 @@ class _GameScreenState extends State<GameScreen> {
           borderRadius: BorderRadius.circular(20),
           border: Border.all(color: isSel ? Colors.greenAccent : Colors.grey),
         ),
-        child: Text(label,
-            style: TextStyle(
-                color: isSel ? Colors.white : Colors.grey,
-                fontWeight: FontWeight.bold)),
+        child: Text(label, style: TextStyle(color: isSel ? Colors.white : Colors.grey, fontWeight: FontWeight.bold)),
       ),
     );
   }
@@ -1220,38 +1060,15 @@ class _GameScreenState extends State<GameScreen> {
   Widget _buildWinScreen() {
     int max = -99999;
     String wName = "";
-    for (int i = 0; i < scores.length; i++) {
-      if (scores[i] > max) {
-        max = scores[i];
-        wName = widget.players[i];
-      }
-    }
-
+    for (int i = 0; i < scores.length; i++) { if (scores[i] > max) { max = scores[i]; wName = widget.players[i]; } }
     String modeKey = widget.settings.presetKey;
     List<ScoreEntry> currentList = highScores[modeKey]!;
-
-    bool isRecord = false;
-    if (currentList.length < 3 || max > currentList.last.score) {
-      isRecord = true;
-    }
-    if (currentList.isEmpty) isRecord = true;
-
+    bool isRecord = currentList.length < 3 || max > (currentList.isEmpty ? -100000 : currentList.last.score);
     TextEditingController nameCtrl = TextEditingController(text: wName);
 
     return Scaffold(
       backgroundColor: Colors.black,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.undo, color: Colors.white, size: 30),
-            onPressed: () {
-              if (_history.isNotEmpty) _undo();
-            },
-          )
-        ],
-      ),
+      appBar: AppBar(backgroundColor: Colors.transparent, elevation: 0, actions: [IconButton(icon: const Icon(Icons.undo, color: Colors.white, size: 30), onPressed: () { if (_history.isNotEmpty) _undo(); })]),
       body: Center(
         child: SingleChildScrollView(
           child: Column(
@@ -1260,62 +1077,23 @@ class _GameScreenState extends State<GameScreen> {
               const Icon(Icons.emoji_events, size: 100, color: Colors.amber),
               const SizedBox(height: 20),
               if (isRecord) ...[
-                Text(txt['new_record']!,
-                    style: const TextStyle(
-                        color: Colors.redAccent,
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold)),
+                Text(txt['new_record']!, style: const TextStyle(color: Colors.redAccent, fontSize: 24, fontWeight: FontWeight.bold)),
                 const SizedBox(height: 10),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 50),
-                  child: TextField(
-                    controller: nameCtrl,
-                    style: const TextStyle(color: Colors.white),
-                    decoration: InputDecoration(
-                      labelText: txt['enter_name'],
-                      filled: true,
-                      fillColor: Colors.white10,
-                      border: const OutlineInputBorder(),
-                    ),
-                  ),
-                ),
+                Padding(padding: const EdgeInsets.symmetric(horizontal: 50), child: TextField(controller: nameCtrl, style: const TextStyle(color: Colors.white), decoration: InputDecoration(labelText: txt['enter_name'], filled: true, fillColor: Colors.white10, border: const OutlineInputBorder()))),
                 const SizedBox(height: 10),
-                ElevatedButton(
-                  onPressed: () {
-                    highScores[modeKey]!.add(ScoreEntry(nameCtrl.text, max));
-                    highScores[modeKey]!
-                        .sort((a, b) => b.score.compareTo(a.score));
-                    if (highScores[modeKey]!.length > 3) {
-                      highScores[modeKey] = highScores[modeKey]!.sublist(0, 3);
-                    }
-                    Navigator.popUntil(context, (r) => r.isFirst);
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (_) => const LeaderboardScreen()));
-                  },
-                  child: Text(txt['save']!),
-                )
+                ElevatedButton(onPressed: () {
+                  highScores[modeKey]!.add(ScoreEntry(nameCtrl.text, max));
+                  highScores[modeKey]!.sort((a, b) => b.score.compareTo(a.score));
+                  if (highScores[modeKey]!.length > 3) highScores[modeKey] = highScores[modeKey]!.sublist(0, 3);
+                  Navigator.popUntil(context, (r) => r.isFirst);
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => const LeaderboardScreen()));
+                }, child: Text(txt['save']!))
               ] else ...[
-                Text(txt['winner']!,
-                    style: const TextStyle(fontSize: 24, color: Colors.grey)),
-                Text(wName,
-                    style: const TextStyle(
-                        fontSize: 50,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white)),
-                Text("$max Points",
-                    style: const TextStyle(color: Colors.green, fontSize: 24)),
+                Text(txt['winner']!, style: const TextStyle(fontSize: 24, color: Colors.grey)),
+                Text(wName, style: const TextStyle(fontSize: 50, fontWeight: FontWeight.bold, color: Colors.white)),
+                Text("$max Points", style: const TextStyle(color: Colors.green, fontSize: 24)),
                 const SizedBox(height: 40),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 40, vertical: 15)),
-                  onPressed: () =>
-                      Navigator.popUntil(context, (r) => r.isFirst),
-                  child: Text(txt['back_menu']!),
-                )
+                ElevatedButton(style: ElevatedButton.styleFrom(backgroundColor: Colors.green, padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15)), onPressed: () => Navigator.popUntil(context, (r) => r.isFirst), child: Text(txt['back_menu']!))
               ]
             ],
           ),
