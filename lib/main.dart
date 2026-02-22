@@ -1253,10 +1253,7 @@ class _GameScreenState extends State<GameScreen> {
           )
         ],
       ),
-  body: Center(
-    child: ConstrainedBox(
-      constraints: const BoxConstraints(maxWidth: 600),
-      child: Container(
+      body: Container(
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -1323,8 +1320,6 @@ class _GameScreenState extends State<GameScreen> {
             ],
           ),
         ),
-      ),
-      ),
     ),
     );
 }
