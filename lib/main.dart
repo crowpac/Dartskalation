@@ -652,7 +652,7 @@ class _SetupScreenState extends State<SetupScreen> {
             ] else ...[
               Padding(
                 padding: const EdgeInsets.all(16.0),
-                body: Container(
+                child: Container(
                   width: double.infinity,
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
@@ -1253,7 +1253,7 @@ class _GameScreenState extends State<GameScreen> {
           )
         ],
       ),
-      body: Container(
+      body: Center(
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -1316,10 +1316,12 @@ class _GameScreenState extends State<GameScreen> {
                   onPressed: () =>
                       Navigator.popUntil(context, (r) => r.isFirst),
                   child: Text(txt['back_menu']!),
-                ]
+                )
+              ]
             ],
           ),
         ),
-    ),
+      ),
     );
+  }
 }
