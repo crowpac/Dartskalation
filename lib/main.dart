@@ -1,4 +1,4 @@
-vvimport 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 
 // --- SPRACH-KONFIGURATION ---
 final ValueNotifier<bool> isGermanNotifier = ValueNotifier(false);
@@ -176,7 +176,6 @@ class DartskalationApp extends StatelessWidget {
           title: 'Dartskalation',
           debugShowCheckedModeBanner: false,
           theme: ThemeData.dark().copyWith(
-            fontFamily: 'sans-serif',
             primaryColor: Colors.green,
             scaffoldBackgroundColor: const Color(0xFF121212),
             colorScheme: const ColorScheme.dark(
@@ -192,9 +191,8 @@ class DartskalationApp extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12)),
               ),
             ),
+            dialogBackgroundColor: const Color(0xFF2C2C2C),
           ),
-          dialogBackgroundColor: const Color(0xFF2C2C2C),
-        ),
           home: HomeScreen(),
         );
       },
