@@ -1325,8 +1325,7 @@ class _GameScreenState extends State<GameScreen> {
           ),
         ),
       ),
-      ), // NEU: Schließt ConstrainedBox
-    ), // NEU: Schließt Center
-    ); // Schließt Scaffold
-  }
+      ),
+    ),
+    );
 }
