@@ -1253,7 +1253,11 @@ class _GameScreenState extends State<GameScreen> {
           )
         ],
       ),
-      body: Center(
+      Scaffold(
+  body: Center(
+    child: ConstrainedBox(
+      constraints: const BoxConstraints(maxWidth: 600),
+      child: Container(
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
