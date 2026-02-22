@@ -176,9 +176,9 @@ class DartskalationApp extends StatelessWidget {
           title: 'Dartskalation',
           debugShowCheckedModeBanner: false,
           theme: ThemeData.dark().copyWith(
+            fontFamily: 'sans-serif',
             primaryColor: Colors.green,
             scaffoldBackgroundColor: const Color(0xFF121212),
-            fontFamily: 'sans-serif',
             colorScheme: const ColorScheme.dark(
               primary: Colors.green,
               secondary: Colors.greenAccent,
@@ -194,7 +194,8 @@ class DartskalationApp extends StatelessWidget {
               ),
             ),
           ),
-
+          home: const HomeScreen(),
+        );
 enum GameMode { normal, cricket }
 
 enum RuleAction {
