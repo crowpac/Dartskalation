@@ -1320,12 +1320,13 @@ class _GameScreenState extends State<GameScreen> {
                   onPressed: () =>
                       Navigator.popUntil(context, (r) => r.isFirst),
                   child: Text(txt['back_menu']!),
-                )
-              ]
+                ]
             ],
           ),
         ),
       ),
-    );
+      ), // NEU: Schließt ConstrainedBox
+    ), // NEU: Schließt Center
+    ); // Schließt Scaffold
   }
 }
