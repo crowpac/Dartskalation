@@ -196,6 +196,9 @@ class DartskalationApp extends StatelessWidget {
           ),
           home: const HomeScreen(),
         );
+      },
+    );
+  }
 enum GameMode { normal, cricket }
 
 enum RuleAction {
