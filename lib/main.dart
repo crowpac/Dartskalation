@@ -652,7 +652,7 @@ class _SetupScreenState extends State<SetupScreen> {
             ] else ...[
               Padding(
                 padding: const EdgeInsets.all(16.0),
-                child: Container(
+                body: Container(
                   width: double.infinity,
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
