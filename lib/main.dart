@@ -192,8 +192,9 @@ class DartskalationApp extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12)),
               ),
             ),
-            dialogBackgroundColor: const Color(0xFF2C2C2C),
           ),
+          dialogBackgroundColor: const Color(0xFF2C2C2C),
+        ),
           home: HomeScreen(),
         );
       },
