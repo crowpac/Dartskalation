@@ -176,30 +176,24 @@ class DartskalationApp extends StatelessWidget {
           title: 'Dartskalation',
           debugShowCheckedModeBanner: false,
           theme: ThemeData.dark().copyWith(
-            fontFamily: 'sans-serif',
             primaryColor: Colors.green,
             scaffoldBackgroundColor: const Color(0xFF121212),
+            fontFamily: 'sans-serif',
             colorScheme: const ColorScheme.dark(
               primary: Colors.green,
               secondary: Colors.greenAccent,
-              surface: Color(0xFF1E1E1E),
+              surface: const Color(0xFF1E1E1E),
             ),
             elevatedButtonTheme: ElevatedButtonThemeData(
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.grey[800],
                 foregroundColor: Colors.white,
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12)),
+                  borderRadius: BorderRadius.circular(12),
+                ),
               ),
             ),
-            dialogBackgroundColor: const Color(0xFF2C2C2C),
           ),
-          home: HomeScreen(),
-        );
-      },
-    );
-  }
-}
 
 enum GameMode { normal, cricket }
 
