@@ -22,7 +22,7 @@ jobs:
         with:
           channel: 'stable'
       - run: flutter pub get
-      - run: flutter build web --base-href /Dartskalation/
+      - run: flutter build web --base-href /Dartskalation/ --web-renderer html
       - uses: actions/configure-pages@v4
       - uses: actions/upload-pages-artifact@v3
         with:
