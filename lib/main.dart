@@ -176,6 +176,7 @@ class DartskalationApp extends StatelessWidget {
           title: 'Dartskalation',
           debugShowCheckedModeBanner: false,
           theme: ThemeData.dark().copyWith(
+            fontFamily: 'sans-serif',
             primaryColor: Colors.green,
             scaffoldBackgroundColor: const Color(0xFF121212),
             colorScheme: const ColorScheme.dark(
