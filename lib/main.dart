@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
+import 'dart:convert';
+import 'dart:io'; // Wird für Autodarts WebSocket benötigt (in echter App)
 
 // --- SPRACH-KONFIGURATION ---
 final ValueNotifier<bool> isGermanNotifier = ValueNotifier(false);
@@ -531,7 +533,7 @@ class BattleRoyaleSelectionScreen extends StatelessWidget {
           GameSettings settings = GameSettings()
             ..mode = GameMode.battleRoyale
             ..presetKey = key
-            ..descKey = 'desc_$key';
+            ..descKey = key.replaceFirst('mode_', 'desc_');
           Navigator.push(context, MaterialPageRoute(builder: (_) => SetupScreen(settings: settings)));
         },
         child: Column(
@@ -608,8 +610,6 @@ class _SetupScreenState extends State<SetupScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(txt['custom_rules']!, style: const TextStyle(color: Colors.greenAccent, fontWeight: FontWeight.bold)),
-                      const SizedBox(height: 10),
                       _buildDropdown(txt['rule_double']!, widget.settings.doubleAction, (v) => setState(() => widget.settings.doubleAction = v!), isMiss: false),
                       _buildDropdown(txt['rule_triple']!, widget.settings.tripleAction, (v) => setState(() => widget.settings.tripleAction = v!), isMiss: false),
                       _buildDropdown(txt['rule_miss']!, widget.settings.missAction, (v) => setState(() => widget.settings.missAction = v!), isMiss: true),
@@ -818,6 +818,9 @@ class _GameScreenState extends State<GameScreen> {
   int dartsThrown = 0;
   bool isGameOver = false;
   final List<Map<String, dynamic>> _history = [];
+  
+  // ignore: unused_field
+  WebSocket? _autodartsSocket;
 
   @override
   void initState() {
@@ -829,6 +832,51 @@ class _GameScreenState extends State<GameScreen> {
     if (widget.settings.presetKey == 'mode_br_tornado') {
       _generateTornadoField();
     }
+    
+    // Autodarts API Setup
+    _connectAutodarts();
+  }
+
+  void _connectAutodarts() async {
+    // ACHTUNG: dart:io funktioniert nicht im Web/DartPad. 
+    // Wenn du die App für Android/Desktop baust, nimm die Sternchen /* */ weg, um Autodarts zu aktivieren.
+    /*
+    try {
+      _autodartsSocket = await WebSocket.connect('ws://${autodartsIpNotifier.value}:3180');
+      _autodartsSocket!.listen((data) {
+        final event = jsonDecode(data);
+        if (event['event'] == 'dart') {
+          int segment = event['segment'];
+          int multiplier = event['multiplier'];
+          _handleAutodartEvent(segment, multiplier);
+        }
+      });
+    } catch (e) { print("Autodarts Error: $e"); }
+    */
+  }
+
+  void _handleAutodartEvent(int segment, int multiplier) {
+    if (isGameOver) return;
+    
+    bool hitTarget = false;
+    int targetVal = (widget.settings.mode != GameMode.cricket && round == 21) ? 25 : round;
+
+    if (widget.settings.mode == GameMode.battleRoyale) {
+      if (widget.settings.presetKey == 'mode_br_classic') {
+        hitTarget = segment > round; 
+      } else if (widget.settings.presetKey == 'mode_br_tornado') {
+        hitTarget = !tornadoFields.contains(segment);
+      } else if (widget.settings.presetKey == 'mode_br_shrink') {
+         hitTarget = true; // Platzhalter für komplexere Zonenlogik
+      }
+    } else if (widget.settings.mode == GameMode.cricket) {
+      hitTarget = [15,16,17,18,19,20,25].contains(segment);
+    } else {
+      hitTarget = (segment == targetVal);
+    }
+
+    int penalty = (hitTarget == false && widget.players[pIdx].missAction == RuleAction.missCustom) ? (segment * multiplier) : 0;
+    _processThrow(hitTarget: hitTarget, multiplier: multiplier, penaltyPoints: penalty);
   }
 
   void _generateTornadoField() {
@@ -883,9 +931,9 @@ class _GameScreenState extends State<GameScreen> {
         if (hitTarget) { // SAFE ZONE GETROFFEN
           dartsThrown = 0;
           forceTurnEnd = true;
-          scores[p] += round; // Bonus für Überleben
+          scores[p] += round; 
         } else { // DANGER ZONE GETROFFEN
-          dartsThrown++; // Verliert 1 von 3 Pfeilen
+          dartsThrown++; 
           if (dartsThrown >= 3) {
             isEliminated[p] = true;
             dartsThrown = 0;
@@ -928,8 +976,29 @@ class _GameScreenState extends State<GameScreen> {
         }
       }
       
-      if (forceTurnEnd && widget.settings.mode != GameMode.battleRoyale) {
-        dartsThrown = 3;
+      if (forceTurnEnd || (widget.settings.mode != GameMode.battleRoyale && dartsThrown >= 3)) {
+        dartsThrown = 0;
+        bool roundEnded = false;
+
+        do {
+          pIdx++;
+          if (pIdx >= widget.players.length) {
+            pIdx = 0;
+            roundEnded = true;
+          }
+        } while (widget.settings.mode == GameMode.battleRoyale && isEliminated[pIdx] && isEliminated.where((e) => !e).length > 1);
+
+        if (roundEnded) {
+          if (widget.settings.mode != GameMode.cricket) {
+            round++;
+            if (widget.settings.presetKey == 'mode_br_tornado') _generateTornadoField();
+            if (round > 21 && widget.settings.mode != GameMode.battleRoyale) isGameOver = true;
+          }
+          if (widget.settings.mode == GameMode.battleRoyale) {
+            int alive = isEliminated.where((e) => !e).length;
+            if (alive <= 1) isGameOver = true;
+          }
+        }
       } else if (widget.settings.mode != GameMode.battleRoyale) {
         dartsThrown++;
       }
@@ -939,28 +1008,6 @@ class _GameScreenState extends State<GameScreen> {
           round++;
           cricketHits = List.filled(widget.players.length, 0);
           if (round > 20) isGameOver = true;
-        }
-      }
-      
-      if (forceTurnEnd || (widget.settings.mode != GameMode.battleRoyale && dartsThrown >= 3)) {
-        dartsThrown = 0;
-        
-        do {
-          pIdx++;
-          if (pIdx >= widget.players.length) {
-            pIdx = 0;
-            if (widget.settings.mode != GameMode.cricket) {
-              round++;
-              if (widget.settings.presetKey == 'mode_br_tornado') _generateTornadoField();
-              if (round > 21 && widget.settings.mode != GameMode.battleRoyale) isGameOver = true;
-            }
-          }
-        } while (widget.settings.mode == GameMode.battleRoyale && isEliminated[pIdx] && isEliminated.where((e) => !e).length > 1);
-
-        if (widget.settings.mode == GameMode.battleRoyale) {
-          if (isEliminated.where((e) => !e).length <= 1) {
-            isGameOver = true;
-          }
         }
       }
     });
@@ -1248,11 +1295,17 @@ class _GameScreenState extends State<GameScreen> {
     String wName = "";
     
     if (widget.settings.mode == GameMode.battleRoyale) {
+      int aliveCount = 0;
       for (int i = 0; i < widget.players.length; i++) {
         if (!isEliminated[i]) {
           wName = widget.players[i].name;
           max = scores[i];
+          aliveCount++;
         }
+      }
+      if (aliveCount == 0) {
+        wName = "DRAW"; // Unentschieden
+        max = 0;
       }
     } else {
       for (int i = 0; i < scores.length; i++) {
@@ -1295,7 +1348,7 @@ class _GameScreenState extends State<GameScreen> {
             children: [
               const Icon(Icons.emoji_events, size: 100, color: Colors.amber),
               const SizedBox(height: 20),
-              if (isRecord) ...[
+              if (isRecord && wName != "DRAW") ...[
                 Text(txt['new_record']!, style: const TextStyle(color: Colors.redAccent, fontSize: 24, fontWeight: FontWeight.bold)),
                 const SizedBox(height: 10),
                 Padding(
@@ -1325,9 +1378,9 @@ class _GameScreenState extends State<GameScreen> {
                   child: Text(txt['save']!),
                 )
               ] else ...[
-                Text(txt['winner']!, style: const TextStyle(fontSize: 24, color: Colors.grey)),
+                if (wName != "DRAW") Text(txt['winner']!, style: const TextStyle(fontSize: 24, color: Colors.grey)),
                 Text(wName, style: const TextStyle(fontSize: 50, fontWeight: FontWeight.bold, color: Colors.white)),
-                Text("$max Points", style: const TextStyle(color: Colors.green, fontSize: 24)),
+                if (wName != "DRAW") Text("$max Points", style: const TextStyle(color: Colors.green, fontSize: 24)),
                 const SizedBox(height: 40),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(backgroundColor: Colors.green, padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15)),
