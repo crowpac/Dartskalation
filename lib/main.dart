@@ -840,7 +840,7 @@ class _GameScreenState extends State<GameScreen> {
   void _connectAutodarts() async {
     // ACHTUNG: dart:io funktioniert nicht im Web/DartPad. 
     // Wenn du die App für Android/Desktop baust, nimm die Sternchen /* */ weg, um Autodarts zu aktivieren.
-    /*
+    
     try {
       _autodartsSocket = await WebSocket.connect('ws://${autodartsIpNotifier.value}:3180');
       _autodartsSocket!.listen((data) {
@@ -852,7 +852,7 @@ class _GameScreenState extends State<GameScreen> {
         }
       });
     } catch (e) { print("Autodarts Error: $e"); }
-    */
+    
   }
 
   void _handleAutodartEvent(int segment, int multiplier) {
@@ -919,7 +919,7 @@ class _GameScreenState extends State<GameScreen> {
     });
   }
 
-  void _processThrow({required bool hitTarget, int multiplier = 1, int penaltyPoints = 0}) {
+void _processThrow({required bool hitTarget, int multiplier = 1, int penaltyPoints = 0}) {
     if (isGameOver) return;
     _saveState();
     setState(() {
@@ -976,6 +976,23 @@ class _GameScreenState extends State<GameScreen> {
         }
       }
       
+      // ZÄHLER VOR DEM WECHSEL ERHÖHEN
+      if (forceTurnEnd && widget.settings.mode != GameMode.battleRoyale) {
+        dartsThrown = 3;
+      } else if (widget.settings.mode != GameMode.battleRoyale) {
+        dartsThrown++;
+      }
+      
+      // CRICKET RUNDEN-CHECK
+      if (widget.settings.mode == GameMode.cricket) {
+        if (cricketHits.every((h) => h >= 3)) {
+          round++;
+          cricketHits = List.filled(widget.players.length, 0);
+          if (round > 20) isGameOver = true;
+        }
+      }
+
+      // SPIELER WECHSELN
       if (forceTurnEnd || (widget.settings.mode != GameMode.battleRoyale && dartsThrown >= 3)) {
         dartsThrown = 0;
         bool roundEnded = false;
@@ -998,16 +1015,6 @@ class _GameScreenState extends State<GameScreen> {
             int alive = isEliminated.where((e) => !e).length;
             if (alive <= 1) isGameOver = true;
           }
-        }
-      } else if (widget.settings.mode != GameMode.battleRoyale) {
-        dartsThrown++;
-      }
-      
-      if (widget.settings.mode == GameMode.cricket) {
-        if (cricketHits.every((h) => h >= 3)) {
-          round++;
-          cricketHits = List.filled(widget.players.length, 0);
-          if (round > 20) isGameOver = true;
         }
       }
     });
